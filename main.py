@@ -33,7 +33,6 @@ for i in range(len(text)):
 data['text'] = corpus
 
 df = DataFrame(data.head())
-df.to_excel('output.xlsx', sheet_name="preprocessing", index=False)
 
 X = data['text']
 y = data['label']
@@ -54,4 +53,22 @@ cv = CountVectorizer()
 X_train_cv = cv.fit_transform(X_train)
 print(X_train_cv.shape)
 
+from sklearn.linear_model import LogisticRegression
 
+lr = LogisticRegression()
+lr.fit(X_train_cv, y_train)
+
+X_test_cv = cv.transform(X_test)
+
+# generate predictions
+predictions = lr.predict(X_test_cv)
+print(predictions)
+
+
+#confusion matrix
+from sklearn import metrics
+df1 = pd.DataFrame(metrics.confusion_matrix(y_test, predictions), index=['ham', 'spam'], columns=['ham', 'spam'])
+
+with pd.ExcelWriter('output.xlsx') as writer:
+    df.to_excel(writer, sheet_name='preprocessing')
+    df1.to_excel(writer, sheet_name='confusionmatrix')
