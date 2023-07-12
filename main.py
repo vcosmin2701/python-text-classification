@@ -34,3 +34,13 @@ data['text'] = corpus
 
 df = DataFrame(data.head())
 df.to_excel('output.xlsx', sheet_name="preprocessing", index=False)
+
+X = data['text']
+y = data['label']
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=123)
+
+print('Training Data: ', X_train.shape)
+print('Testing Data: ', X_test.shape)
