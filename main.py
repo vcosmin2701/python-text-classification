@@ -44,3 +44,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 
 print('Training Data: ', X_train.shape)
 print('Testing Data: ', X_test.shape)
+
+# Bag of Words model
+
+from sklearn.feature_extraction.text import CountVectorizer
+
+cv = CountVectorizer()
+
+X_train_cv = cv.fit_transform(X_train)
+print(X_train_cv.shape)
+
+
